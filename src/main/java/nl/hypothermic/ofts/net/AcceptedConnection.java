@@ -157,7 +157,7 @@ public class AcceptedConnection extends Thread {
 				try {
 					if (outq.size() > 0) {
 						temp = outq.getFirst();
-						info("Writing packet " + temp.id);
+						info("Writing packet " + temp.id + temp.toString());
 						temp.write(dos);
 						dos.flush();
 						outq.removeFirst();

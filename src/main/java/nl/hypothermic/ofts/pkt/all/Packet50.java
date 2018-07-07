@@ -23,6 +23,13 @@ public class Packet50 extends Packet {
 		super(50);
 	}
 	
+	public Packet50(int x, int y, boolean mode) {
+		this();
+		this.x = x;
+		this.y = y;
+		this.mode = mode;
+	}
+	
 	public Packet50(DataInputStream dis) throws IOException {
 		this();
 		this.read(dis);

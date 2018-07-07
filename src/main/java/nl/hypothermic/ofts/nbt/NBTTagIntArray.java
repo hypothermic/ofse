@@ -1,4 +1,4 @@
-package nl.hypothermic.tekkitnet.nbt;
+package nl.hypothermic.ofts.nbt;
 
 import java.io.DataInput;
 import java.io.DataOutput;

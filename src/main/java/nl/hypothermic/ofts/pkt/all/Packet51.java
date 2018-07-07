@@ -52,11 +52,15 @@ public class Packet51 extends Packet {
 		this();
 		this.read(dis);
 	}
-
+	
 	public Packet51(Chunk chunk, boolean par2, int par3) {
-		this();
-		this.x = chunk.xPosition;
-		this.z = chunk.zPosition;
+		this(chunk, par2, par3, chunk.xPosition, chunk.zPosition);
+	}
+
+	public Packet51(Chunk chunk, boolean par2, int par3, int xPos, int zPos) {
+		super(51);
+		this.x = xPos;
+		this.z = zPos;
 		this.includeInitialize = par2;
 
 		if (par2) {

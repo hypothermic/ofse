@@ -10,7 +10,7 @@ import java.net.URLEncoder;
 
 import nl.hypothermic.ofts.Server;
 import nl.hypothermic.ofts.game.Player;
-import nl.hypothermic.ofts.game.WorldType;
+import nl.hypothermic.ofts.game.world.WorldType;
 import nl.hypothermic.ofts.net.AcceptedConnection;
 import nl.hypothermic.ofts.pkt.Packet;
 import nl.hypothermic.ofts.util.LoggingManager;
@@ -55,7 +55,7 @@ public class Packet1 extends Packet {
 			Server.players.add(pl);
 			LoggingManager.info("Player \"" + pl.username + "\" (pktname=\"" + this.username + "\", entityId=" + pl.entityId + ") has joined the server.");
 			ac.queuePacket(new Packet1(pl.entityId, "", WorldType.NORMAL, Server.gamemode, Server.dimension, (byte) Server.difficulty, (byte) 0, (byte) Server.maxPlayers));
-			ac.queuePacket(new Packet6(16, 64, 16));
+			ac.queuePacket(new Packet6(1, 72, 1));
 			return null;
 		} else {
 		// Handle online login and username verification via Mojang servers (not working yet??? TODO test!)
@@ -73,7 +73,14 @@ public class Packet1 extends Packet {
 			    			Server.players.add(pl);
 			    			LoggingManager.info("Verified player \"" + pl.username + "\" (pktname=\"" + username + "\", entityId=" + pl.entityId + ") has joined the server.");
 			    			ac.queuePacket(new Packet1(pl.entityId, "", WorldType.NORMAL, Server.gamemode, Server.dimension, (byte) Server.difficulty, (byte) 0, (byte) Server.maxPlayers));
-			    			ac.queuePacket(new Packet6(16, 64, 16));
+			    			ac.queuePacket(new Packet6(1, 72, 1));
+			    			/*for (int i = -8; i < 8; i++) {
+			    				for (int j = -8; j < 8; j++) {
+			    					ac.queuePacket(new Packet50(i, j, true));
+			    					ac.queuePacket(new Packet51(Server.world.getChunk(1, 1), true, 15, i, j));
+			    					LoggingManager.info("Chunk at " + i + ", " + j + " sent to client.");
+			    				}
+			    			}*/
 			            } else {
 			                ac.queuePacket(new Packet255("Authentication error: Failed to verify username!"));
 			            }

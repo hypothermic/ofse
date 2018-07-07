@@ -41,7 +41,7 @@ public class MathHelper {
 	/**
 	 * Returns the greatest integer less than or equal to the double argument
 	 */
-	public static int floor_double(double par0) {
+	public static int floor(double par0) {
 		int var2 = (int) par0;
 		return par0 < (double) var2 ? var2 - 1 : var2;
 	}

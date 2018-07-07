@@ -3,10 +3,11 @@ package nl.hypothermic.ofts.game.world;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+
+import nl.hypothermic.ofts.game.Entity;
+import nl.hypothermic.ofts.util.MathHelper;
 
 public class Chunk {
 	/**
@@ -18,7 +19,7 @@ public class Chunk {
 	/**
 	 * Used to store block IDs, block MSBs, Sky-light maps, Block-light maps, and metadata. Each entry corresponds to a logical segment of 16x16x16 blocks, stacked vertically.
 	 */
-	private ChunkSection[] storageArrays;
+	public ChunkSection[] storageArrays;
 
 	/**
 	 * Contains a 16x16 mapping on the X/Z plane of the biome ID to which each colum belongs.
@@ -63,7 +64,7 @@ public class Chunk {
 	public boolean isModified;
 
 	/**
-	 * Whether this Chunk has any Entities and thus requires saving on every tick
+	 * Whether this Chunk has any Entities and thus requires saving on every tick (.m)
 	 */
 	public boolean hasEntities;
 
@@ -230,6 +231,49 @@ public class Chunk {
 	public boolean isEmpty() {
 		return false;
 	}
+	
+	public void addEntity(Entity entity) {
+        this.hasEntities = true;
+        int i = MathHelper.floor(entity.locX / 16.0D);
+        int j = MathHelper.floor(entity.locZ / 16.0D);
+
+        if (i != this.xPosition || j != this.zPosition) {
+            System.out.println("Wrong location! " + entity);
+            Thread.dumpStack();
+        }
+
+        int k = MathHelper.floor(entity.locY / 16.0D);
+
+        if (k < 0) {
+            k = 0;
+        }
+
+        if (k >= this.entityLists.length) {
+            k = this.entityLists.length - 1;
+        }
+
+        entity.bZ = true;
+        entity.ca = this.xPosition;
+        entity.cb = k;
+        entity.cc = this.zPosition;
+        this.entityLists[k].add(entity);
+    }
+
+    public void b(Entity entity) {
+        this.a(entity, entity.cb);
+    }
+
+    public void a(Entity entity, int i) {
+        if (i < 0) {
+            i = 0;
+        }
+
+        if (i >= this.entityLists.length) {
+            i = this.entityLists.length - 1;
+        }
+
+        this.entityLists[i].remove(entity);
+    }
 
 	/**
 	 * Turns unknown blocks into air blocks to avoid crashing Minecraft.
@@ -282,4 +326,8 @@ public class Chunk {
 	public void setBiomeArray(byte[] par1ArrayOfByte) {
 		this.blockBiomeArray = par1ArrayOfByte;
 	}
+	
+	public ChunkCoordIntPair getChunkCoordIntPair() {
+        return new ChunkCoordIntPair(this.xPosition, this.zPosition);
+    }
 }

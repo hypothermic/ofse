@@ -105,7 +105,8 @@ public class ChunkSection {
 		return this.tickRefCount > 0;
 	}
 
-	/*public void func_48599_d() {
+	/** d() */
+	public void update() {
 		this.blockRefCount = 0;
 		this.tickRefCount = 0;
 
@@ -132,7 +133,7 @@ public class ChunkSection {
 				}
 			}
 		}
-	}*/
+	}
 
 	/**
 	 * Returns the NibbleArray instance containing Sky-light data.

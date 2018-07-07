@@ -1,4 +1,4 @@
-package nl.hypothermic.ofts.game;
+package nl.hypothermic.ofts.game.world;
 
 public class WorldType {
 
@@ -54,7 +54,6 @@ public class WorldType {
                 return types[i];
             }
         }
-
         return null;
     }
 }

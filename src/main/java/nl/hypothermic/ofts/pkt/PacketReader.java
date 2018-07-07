@@ -29,8 +29,7 @@ public class PacketReader {
 			case 1:
 				return new Packet1();
 			case 2:
-				String tmp = Packet.readString(dis, 64);
-				return new Packet2(tmp);
+				return new Packet2(Packet.readString(dis, 64));
 			case 50:
 				return new Packet50();
 			case 51:
