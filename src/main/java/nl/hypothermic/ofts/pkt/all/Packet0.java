@@ -15,6 +15,11 @@ public class Packet0 extends Packet {
 		super(0);
 	}
 	
+	public Packet0(DataInputStream dis) throws IOException {
+		super(0);
+		this.read(dis);
+	}
+	
 	@Override public Packet react(AcceptedConnection ac) {
 		// TODO Auto-generated method stub
 		return null;

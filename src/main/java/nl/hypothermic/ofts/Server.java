@@ -10,6 +10,7 @@ import java.util.SplittableRandom;
 import nl.hypothermic.ofts.game.Player;
 import nl.hypothermic.ofts.game.World;
 import nl.hypothermic.ofts.game.world.loader.ChunkRegionLoader;
+import nl.hypothermic.ofts.pkt.Packet;
 
 public class Server {
 	
@@ -44,5 +45,11 @@ public class Server {
 			x.printStackTrace();
 		}
 		info("World initialized.");
+	}
+	
+	public static void sendToAllPlayers(Packet packet) {
+		for (Player player : players) {
+			player.sendPacket(packet);
+		}
 	}
 }

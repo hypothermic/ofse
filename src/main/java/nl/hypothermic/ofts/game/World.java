@@ -48,6 +48,7 @@ public class World {
     }
 
     public long getTime() {
-        return this.worldData.getTime();
+        //return this.worldData.getTime();
+    	return 2000;
     }
 }

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import nl.hypothermic.ofts.nbt.NBTTagCompound;
 import nl.hypothermic.ofts.nbt.NBTTagList;
 import nl.hypothermic.ofts.net.AcceptedConnection;
+import nl.hypothermic.ofts.pkt.Packet;
 
 public class Player extends Entity {
 	
@@ -35,5 +36,9 @@ public class Player extends Entity {
 	@Override protected void toNbt(NBTTagCompound nbttagcompound) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void sendPacket(Packet packet) {
+		conn.queuePacket(packet);
 	}
 }

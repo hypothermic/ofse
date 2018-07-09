@@ -8,33 +8,40 @@ import nl.hypothermic.ofts.Server;
 import nl.hypothermic.ofts.net.AcceptedConnection;
 import nl.hypothermic.ofts.pkt.Packet;
 
-public class Packet254 extends Packet {
+public class Packet4 extends Packet {
 	
-	// 254: SERVER INFO RQ
-
-	public Packet254() {
-		super(254);
+	// 4: UPDATE TIME
+	
+	public long time;
+	
+	public Packet4() {
+		super(4);
 	}
 	
-	public Packet254(DataInputStream dis) throws IOException {
-		super(254);
+	public Packet4(long time) {
+		super(4);
+		this.time = time;
+	}
+	
+	public Packet4(DataInputStream dis) throws IOException {
+		super(4);
 		this.read(dis);
 	}
 	
 	@Override public Packet react(AcceptedConnection ac) {
-		//return new Packet255(Server.motd + "\u00A769\u00A7420");
-		return new Packet255(Server.motd, Server.currentPlayers, Server.maxPlayers);
+		return null;
 	}
 	
 	@Override public void read(DataInputStream dis) throws IOException {
-		// no-op: empty id-only packet
+		time = dis.readLong();
 	}
 	
 	@Override public void write(DataOutputStream dos) throws IOException {
 		dos.write(id);
+		dos.writeLong(time);
 	}
 
 	@Override public int getSize() {
-		return 0;
+		return 8;
 	}
 }

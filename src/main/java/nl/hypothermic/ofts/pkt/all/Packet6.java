@@ -27,6 +27,11 @@ public class Packet6 extends Packet {
 		this.z = z;
 	}
 	
+	public Packet6(DataInputStream dis) throws IOException {
+		super(6);
+		this.read(dis);
+	}
+	
 	@Override public Packet react(AcceptedConnection ac) {
 		// TODO
 		return null;

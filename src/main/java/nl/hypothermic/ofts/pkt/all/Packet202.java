@@ -21,12 +21,24 @@ public class Packet202 extends Packet {
 		super(202);
 	}
 	
+	public Packet202(boolean isInvulnerable, boolean isFlying, boolean canFly, boolean canInstantlyBuild) {
+		super(202);
+		this.isInvulnerable = isInvulnerable;
+		this.isFlying = isFlying;
+		this.canFly = canFly;
+		this.canInstantlyBuild = canInstantlyBuild;
+	}
+	
+	public Packet202(DataInputStream dis) throws IOException {
+		super(202);
+		this.read(dis);
+	}
+	
 	@Override public Packet react(AcceptedConnection ac) {
 		return null;
 	}
 	
 	@Override public void read(DataInputStream dis) throws IOException {
-		// no-op: empty id-only packet
 		this.isInvulnerable = dis.readBoolean();
         this.isFlying = dis.readBoolean();
         this.canFly = dis.readBoolean();

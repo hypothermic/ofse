@@ -115,6 +115,12 @@ public class AcceptedConnection extends Thread {
 	public void queuePacket(Packet packet) {
 		outq.add(packet);
 	}
+	
+	public void queuePacket(Packet... packets) {
+		for (Packet packet : packets) {
+			outq.add(packet);
+		}
+	}
 
 	private class ReaderThread extends Thread {
 
@@ -127,11 +133,6 @@ public class AcceptedConnection extends Thread {
 				if (current != null) {
 					if (current.id != 0) {
 						info("Received packet " + current.id);
-						try {
-							current.read(dis);
-						} catch (IOException iox) {
-							iox.printStackTrace();
-						}
 						react = current.react(connection);
 						if (react != null) {
 							outq.add(react);
@@ -157,7 +158,7 @@ public class AcceptedConnection extends Thread {
 				try {
 					if (outq.size() > 0) {
 						temp = outq.getFirst();
-						info("Writing packet " + temp.id + temp.toString());
+						info("Writing packet " + temp.id);
 						temp.write(dos);
 						dos.flush();
 						outq.removeFirst();
