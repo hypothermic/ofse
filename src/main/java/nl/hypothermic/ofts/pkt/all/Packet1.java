@@ -5,7 +5,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -89,7 +88,11 @@ public class Packet1 extends Packet {
 		Player pl = new Player(ac, packet.username, true);
 		Server.players.add(pl);
 		LoggingManager.info("Player \"" + pl.username + "\" (pktname=\"" + packet.username + "\", entityId=" + pl.entityId + ") has joined the server.");
-		ac.queuePacket(new Packet1(pl.entityId, "", WorldType.NORMAL, Server.gamemode, Server.dimension, (byte) Server.difficulty, (byte) 0, (byte) Server.maxPlayers), new Packet6(1, 72, 1), new Packet202(true, false, true, true), new Packet4(Server.world.getTime()));
+		ac.queuePacket(new Packet1(pl.entityId, "", WorldType.NORMAL, Server.gamemode, Server.dimension, (byte) Server.difficulty, (byte) 0, (byte) Server.maxPlayers),
+					   new Packet6(1, 72, 1),
+					   new Packet202(true, false, true, true),
+					   new Packet4(Server.world.getTime()),
+					   new Packet13(pl.locX, pl.locY + 1.6200000047683716D, pl.locY, pl.locZ, pl.yaw, pl.pitch, false));
 		ac.isEstablished = true;
 		Server.sendToAllPlayers(new Packet3(pl.username + " has joined the server!"));
 		// ---- FORGE ---- // TODO

@@ -37,6 +37,7 @@ public class World {
     public World(IChunkLoader loader) throws IOException {
     	this.loader = loader;
     	chunks = loader.loadChunk(this, 1, 1);
+    	this.worldData = loader.loadWorldData();
     }
     
     public WorldData getWorldData() {

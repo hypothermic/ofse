@@ -6,12 +6,15 @@ import java.io.IOException;
 import nl.hypothermic.ofts.pkt.all.Packet0;
 import nl.hypothermic.ofts.pkt.all.Packet1;
 import nl.hypothermic.ofts.pkt.all.Packet10;
+import nl.hypothermic.ofts.pkt.all.Packet11;
 import nl.hypothermic.ofts.pkt.all.Packet13;
 import nl.hypothermic.ofts.pkt.all.Packet2;
 import nl.hypothermic.ofts.pkt.all.Packet202;
 import nl.hypothermic.ofts.pkt.all.Packet250;
 import nl.hypothermic.ofts.pkt.all.Packet254;
 import nl.hypothermic.ofts.pkt.all.Packet3;
+import nl.hypothermic.ofts.pkt.all.Packet30;
+import nl.hypothermic.ofts.pkt.all.Packet33;
 import nl.hypothermic.ofts.pkt.all.Packet4;
 import nl.hypothermic.ofts.pkt.all.Packet50;
 import nl.hypothermic.ofts.pkt.all.Packet51;
@@ -37,7 +40,7 @@ public class PacketReader {
 			case 1:
 				return new Packet1(dis);
 			case 2:
-				return new Packet2(Packet.readString(dis, 64));
+				return new Packet2(dis);
 			case 3:
 				return new Packet3(dis);
 			case 4:
@@ -48,8 +51,14 @@ public class PacketReader {
 				return new Packet8(dis);
 			case 10:
 				return new Packet10(dis);
+			case 11:
+				return new Packet11(dis);
 			case 13:
 				return new Packet13(dis);
+			case 30:
+				return new Packet30(dis);
+			case 33:
+				return new Packet33(dis);
 			case 50:
 				return new Packet50(dis);
 			case 51:

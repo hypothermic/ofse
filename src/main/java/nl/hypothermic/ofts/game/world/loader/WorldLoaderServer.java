@@ -30,7 +30,7 @@ public class WorldLoaderServer extends WorldLoader {
 	public boolean isConvertable(String s) {
 		WorldData worlddata = this.b(s);
 
-		return worlddata != null && worlddata.h() != this.a();
+		return worlddata != null && worlddata.getVersion() != this.a();
 	}
 
 	public boolean convert(String s) {
@@ -66,7 +66,7 @@ public class WorldLoaderServer extends WorldLoader {
 		this.a(new File(file1, "region"), arraylist, (WorldChunkManager) object, 0, i);
 		this.a(new File(file2, "region"), arraylist1, new WorldChunkManagerHell(Biome.HELL, 1.0F, 0.0F), arraylist.size(), i);
 		this.a(new File(file3, "region"), arraylist2, new WorldChunkManagerHell(Biome.SKY, 0.5F, 0.0F), arraylist.size() + arraylist1.size(), i);
-		worlddata.a(19133);
+		worlddata.setVersion(19133);
 		if (worlddata.getType() == WorldType.VERSION_1_1f) {
 			worlddata.setType(WorldType.NORMAL);
 		}

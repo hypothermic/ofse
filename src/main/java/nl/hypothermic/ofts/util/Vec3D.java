@@ -78,7 +78,7 @@ public class Vec3D {
 	 * Normalizes the vector to a length of 1 (except if it is the zero vector)
 	 */
 	public Vec3D normalize() {
-		double var1 = (double) MathHelper.sqrt_double(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
+		double var1 = (double) MathHelper.sqrt(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
 		return var1 < 1.0E-4D ? createVector(0.0D, 0.0D, 0.0D) : createVector(this.xCoord / var1, this.yCoord / var1, this.zCoord / var1);
 	}
 
@@ -100,7 +100,7 @@ public class Vec3D {
 		double var2 = par1Vec3D.xCoord - this.xCoord;
 		double var4 = par1Vec3D.yCoord - this.yCoord;
 		double var6 = par1Vec3D.zCoord - this.zCoord;
-		return (double) MathHelper.sqrt_double(var2 * var2 + var4 * var4 + var6 * var6);
+		return (double) MathHelper.sqrt(var2 * var2 + var4 * var4 + var6 * var6);
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class Vec3D {
 	 * Returns the length of the vector.
 	 */
 	public double lengthVector() {
-		return (double) MathHelper.sqrt_double(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
+		return (double) MathHelper.sqrt(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
 	}
 
 	/**

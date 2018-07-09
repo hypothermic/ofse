@@ -151,15 +151,15 @@ public class WorldData {
         return this.seed;
     }
 
-    public int c() {
+    public int getSpawnX() {
         return this.spawnX;
     }
 
-    public int d() {
+    public int getSpawnY() {
         return this.spawnY;
     }
 
-    public int e() {
+    public int getSpawnZ() {
         return this.spawnZ;
     }
 
@@ -167,12 +167,12 @@ public class WorldData {
         return this.time;
     }
 
-    public int g() {
+    public int getDimension() {
         return this.dimension;
     }
 
-    public void a(long i) {
-        this.time = i;
+    public void setTime(long newTime) {
+        this.time = newTime;
     }
 
     public void setSpawn(int i, int j, int k) {
@@ -181,16 +181,16 @@ public class WorldData {
         this.spawnZ = k;
     }
 
-    public void a(String s) {
-        this.name = s;
+    public void setWorldName(String newName) {
+        this.name = newName;
     }
 
-    public int h() {
+    public int getVersion() {
         return this.version;
     }
 
-    public void a(int i) {
-        this.version = i;
+    public void setVersion(int newVersion) {
+        this.version = newVersion;
     }
 
     public boolean isThundering() {
@@ -205,8 +205,8 @@ public class WorldData {
         return this.thunderTicks;
     }
 
-    public void setThunderDuration(int i) {
-        this.thunderTicks = i;
+    public void setThunderDuration(int newThunderDuration) {
+        this.thunderTicks = newThunderDuration;
     }
 
     public boolean hasStorm() {

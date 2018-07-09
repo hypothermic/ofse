@@ -22,18 +22,18 @@ public class MathHelper {
 		return SIN_TABLE[(int) (par0 * 10430.378F + 16384.0F) & 65535];
 	}
 
-	public static final float sqrt_float(float par0) {
+	public static final float sqrt(float par0) {
 		return (float) Math.sqrt((double) par0);
 	}
 
-	public static final float sqrt_double(double par0) {
+	public static final float sqrt(double par0) {
 		return (float) Math.sqrt(par0);
 	}
 
 	/**
 	 * Returns the greatest integer less than or equal to the float argument
 	 */
-	public static int floor_float(float par0) {
+	public static int floor(float par0) {
 		int var1 = (int) par0;
 		return par0 < (float) var1 ? var1 - 1 : var1;
 	}

@@ -5,7 +5,10 @@ import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,20 +23,20 @@ import nl.hypothermic.ofts.game.world.Chunk;
 import nl.hypothermic.ofts.game.world.ChunkCoordIntPair;
 import nl.hypothermic.ofts.game.world.ChunkSection;
 import nl.hypothermic.ofts.game.world.NibbleArray;
+import nl.hypothermic.ofts.game.world.WorldData;
 import nl.hypothermic.ofts.nbt.NBTCompressedStreamTools;
 import nl.hypothermic.ofts.nbt.NBTTagCompound;
 import nl.hypothermic.ofts.nbt.NBTTagList;
-import nl.hypothermic.ofts.util.NextTickListEntry;
 
 public class ChunkRegionLoader implements IChunkLoader {
 
     private List a = new ArrayList();
     private Set b = new HashSet();
     private Object c = new Object();
-    private final File d;
+    private final File worldDir;
 
     public ChunkRegionLoader(File file1) {
-        this.d = file1;
+        this.worldDir = file1;
     }
 
     public Chunk loadChunk(World world, int i, int j) throws IOException {
@@ -53,7 +56,7 @@ public class ChunkRegionLoader implements IChunkLoader {
         }
 
         if (nbttagcompound == null) {
-            DataInputStream datainputstream = RegionFileCache.b(this.d, i, j);
+            DataInputStream datainputstream = RegionFileCache.b(this.worldDir, i, j);
 
             if (datainputstream == null) {
                 return null;
@@ -63,6 +66,13 @@ public class ChunkRegionLoader implements IChunkLoader {
         }
 
         return this.a(world, i, j, nbttagcompound);
+    }
+    
+    public WorldData loadWorldData() throws IOException {
+    	File file1 = new File(this.worldDir, "level.dat");
+    	NBTTagCompound nbttagcompound = NBTCompressedStreamTools.readCompressed((InputStream) (new FileInputStream(file1)));
+        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
+        return new WorldData(nbttagcompound1);
     }
 
     protected Chunk a(World world, int i, int j, NBTTagCompound nbttagcompound) {
@@ -144,7 +154,7 @@ public class ChunkRegionLoader implements IChunkLoader {
     }
 
     private void a(PendingChunkToSave pendingchunktosave) throws IOException {
-        DataOutputStream dataoutputstream = RegionFileCache.c(this.d, pendingchunktosave.a.x, pendingchunktosave.a.z);
+        DataOutputStream dataoutputstream = RegionFileCache.c(this.worldDir, pendingchunktosave.a.x, pendingchunktosave.a.z);
 
         NBTCompressedStreamTools.write(pendingchunktosave.b, (DataOutput) dataoutputstream);
         try {

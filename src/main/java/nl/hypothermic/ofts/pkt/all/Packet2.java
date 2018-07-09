@@ -23,6 +23,11 @@ public class Packet2 extends Packet {
 		this.data = data;
 	}
 	
+	public Packet2(DataInputStream dis) throws IOException {
+		super(2);
+		this.read(dis);
+	}
+	
 	public String getUsername() {
 		return data.split(";")[0];
 	}
