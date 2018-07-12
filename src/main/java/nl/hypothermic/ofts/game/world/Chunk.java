@@ -70,7 +70,7 @@ public class Chunk {
 
 	/** The time according to World.worldTime when this chunk was last saved */
 	public long lastSaveTime;
-	public boolean field_50025_o;
+	public boolean seenByPlayer;
 
 	/**
 	 * Contains the current round-robin relight check index, and is implied as the relight check location as well.
@@ -89,7 +89,7 @@ public class Chunk {
 		this.isModified = false;
 		this.hasEntities = false;
 		this.lastSaveTime = 0L;
-		this.field_50025_o = false;
+		this.seenByPlayer = false;
 		this.queuedLightChecks = 4096;
 		this.field_35638_u = false;
 		this.entityLists = new List[16];

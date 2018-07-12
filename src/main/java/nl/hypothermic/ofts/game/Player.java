@@ -5,7 +5,6 @@ import nl.hypothermic.ofts.massdata.MassPlayerData;
 import nl.hypothermic.ofts.nbt.NBTTagCompound;
 import nl.hypothermic.ofts.net.AcceptedConnection;
 import nl.hypothermic.ofts.pkt.Packet;
-import nl.hypothermic.ofts.pkt.all.Packet0;
 import nl.hypothermic.ofts.pkt.all.Packet50;
 import nl.hypothermic.ofts.pkt.all.Packet51;
 import nl.hypothermic.ofts.util.LoggingManager;

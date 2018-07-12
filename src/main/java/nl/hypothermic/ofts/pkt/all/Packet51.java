@@ -64,7 +64,7 @@ public class Packet51 extends Packet {
 
 		if (par2) {
 			par3 = 65535;
-			chunk.field_50025_o = true;
+			chunk.seenByPlayer = true;
 		}
 
 		ChunkSection[] var4 = chunk.getBlockStorageArray();
