@@ -20,7 +20,7 @@ import nl.hypothermic.ofts.nbt.NBTTagList;
 
 /**==========================================**\
      FireLoader - quickly load Anvil worlds.
-          One class is all it takes.
+             v1.0.0 - 12/07/2018
           
      Copyright (c) admin@hypothermic.nl, 2018
       with significant parts made by others.
