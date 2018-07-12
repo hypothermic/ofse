@@ -44,4 +44,8 @@ public class Packet4 extends Packet {
 	@Override public int getSize() {
 		return 8;
 	}
+
+	@Override public String toString() {
+		return "Packet4 [time=" + this.time + "]";
+	}
 }

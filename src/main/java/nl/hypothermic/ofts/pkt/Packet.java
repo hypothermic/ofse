@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import nl.hypothermic.ofts.net.AcceptedConnection;
+import nl.hypothermic.ofts.util.LoggingManager;
 
 public abstract class Packet {
 
@@ -57,6 +58,7 @@ public abstract class Packet {
 		if (string.length() > 32767) {
 			throw new IOException("String too large");
 		} else {
+			LoggingManager.info("SEND STR:" + string);
 			dos.writeShort(string.length());
 			dos.writeChars(string);
 		}

@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import nl.hypothermic.ofts.Server;
 import nl.hypothermic.ofts.net.AcceptedConnection;
 import nl.hypothermic.ofts.pkt.Packet;
 
@@ -32,10 +33,14 @@ public class Packet0 extends Packet {
 	
 	@Override public void write(DataOutputStream dos) throws IOException {
 		dos.write(id);
-		// TODO
+		dos.write(Server.random.nextInt());
 	}
 
 	@Override public int getSize() {
 		return 4;
+	}
+
+	@Override public String toString() {
+		return "Packet0 [id=" + this.id + "]";
 	}
 }

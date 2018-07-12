@@ -56,4 +56,8 @@ public class Packet202 extends Packet {
 	@Override public int getSize() {
 		return 1;
 	}
+
+	@Override public String toString() {
+		return "Packet202 [isInvulnerable=" + this.isInvulnerable + ", isFlying=" + this.isFlying + ", canFly=" + this.canFly + ", canInstantlyBuild=" + this.canInstantlyBuild + "]";
+	}
 }

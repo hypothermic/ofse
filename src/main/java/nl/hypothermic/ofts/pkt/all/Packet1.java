@@ -94,7 +94,8 @@ public class Packet1 extends Packet {
 					   new Packet4(Server.world.getTime()),
 					   new Packet13(pl.locX, pl.locY + 1.6200000047683716D, pl.locY, pl.locZ, pl.yaw, pl.pitch, false));
 		ac.isEstablished = true;
-		Server.sendToAllPlayers(new Packet3(pl.username + " has joined the server!"));
+		pl.startChunkAllocationThread();
+		//Server.sendToAllPlayers(new Packet3(pl.username + " has joined the server!"));
 		// ---- FORGE ---- // TODO
 		/*if (packet.d == 68066119) {
 			ForgeHooks.onLogin(manager, pktLogin);
@@ -160,7 +161,7 @@ public class Packet1 extends Packet {
 		if (this.worldType == null) {
 			writeString("", dos);
 		} else {
-			writeString(this.worldType.name(), dos);
+			writeString(this.worldType.getName(), dos);
 		}
 
 		dos.writeInt(this.gamemode);
@@ -174,9 +175,13 @@ public class Packet1 extends Packet {
 		int i = 0;
 
 		if (this.worldType != null) {
-			i = this.worldType.name().length();
+			i = this.worldType.getName().length();
 		}
 
 		return 4 + this.username.length() + 4 + 7 + 7 + i;
+	}
+
+	@Override public String toString() {
+		return "Packet1 [protocolVersion=" + this.protocolVersion + ", username=" + this.username + ", worldType=" + this.worldType + ", gamemode=" + this.gamemode + ", dim=" + this.dim + ", diff=" + this.diff + ", g=" + this.g + ", maxPlayers=" + this.maxPlayers + "]";
 	}
 }

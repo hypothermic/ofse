@@ -56,4 +56,8 @@ public class Packet50 extends Packet {
 	@Override public int getSize() {
 		return 9;
 	}
+
+	@Override public String toString() {
+		return "Packet50 [x=" + this.x + ", y=" + this.y + ", mode=" + this.mode + "]";
+	}
 }

@@ -1,4 +1,4 @@
-package nl.hypothermic.ofts.game.world.loader;
+package nl.hypothermic.fireloader;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -52,7 +52,7 @@ public class RegionFileCache {
                 RegionFile regionfile = (RegionFile) reference.get();
 
                 if (regionfile != null) {
-                    regionfile.a();
+                    regionfile.close();
                 }
             } catch (IOException ioexception) {
                 ioexception.printStackTrace();
@@ -63,15 +63,14 @@ public class RegionFileCache {
     }
 
     public static DataInputStream b(File file1, int i, int j) {
-    	System.out.println("1");
         RegionFile regionfile = a(file1, i, j);
-        System.out.println("2");
-        return regionfile.a(i & 31, j & 31);
+
+        return regionfile.getChunkDataInputStream(i & 31, j & 31);
     }
 
     public static DataOutputStream c(File file1, int i, int j) {
         RegionFile regionfile = a(file1, i, j);
 
-        return regionfile.b(i & 31, j & 31);
+        return regionfile.getChunkDataOutputStream(i & 31, j & 31);
     }
 }

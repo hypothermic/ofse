@@ -6,7 +6,6 @@ import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -27,6 +26,7 @@ import nl.hypothermic.ofts.game.world.WorldData;
 import nl.hypothermic.ofts.nbt.NBTCompressedStreamTools;
 import nl.hypothermic.ofts.nbt.NBTTagCompound;
 import nl.hypothermic.ofts.nbt.NBTTagList;
+import nl.hypothermic.ofts.util.LoggingManager;
 
 public class ChunkRegionLoader implements IChunkLoader {
 
@@ -54,7 +54,7 @@ public class ChunkRegionLoader implements IChunkLoader {
                 }
             }
         }
-
+        
         if (nbttagcompound == null) {
             DataInputStream datainputstream = RegionFileCache.b(this.worldDir, i, j);
 
@@ -299,7 +299,7 @@ public class ChunkRegionLoader implements IChunkLoader {
         if (nbttaglist1 != null) {
             for (int l = 0; l < nbttaglist1.tagCount(); ++l) {
                 NBTTagCompound nbttagcompound2 = (NBTTagCompound) nbttaglist1.tagAt(l);
-                Entity entity = EntityTypes.a(nbttagcompound2, world);
+                Entity entity = EntityTypes.a(nbttagcompound2);
 
                 chunk.hasEntities = true;
                 if (entity != null) {

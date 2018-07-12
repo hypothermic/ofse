@@ -125,7 +125,7 @@ public class WorldData {
 
     private void a(NBTTagCompound nbttagcompound, NBTTagCompound nbttagcompound1) {
         nbttagcompound.setLong("RandomSeed", this.seed);
-        nbttagcompound.setString("generatorName", this.type.name());
+        nbttagcompound.setString("generatorName", this.type.getName());
         nbttagcompound.setInteger("generatorVersion", this.type.getVersion());
         nbttagcompound.setInteger("GameType", this.gameType);
         nbttagcompound.setBoolean("MapFeatures", this.useMapFeatures);

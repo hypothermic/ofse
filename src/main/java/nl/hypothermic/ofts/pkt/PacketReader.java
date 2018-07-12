@@ -12,6 +12,7 @@ import nl.hypothermic.ofts.pkt.all.Packet2;
 import nl.hypothermic.ofts.pkt.all.Packet202;
 import nl.hypothermic.ofts.pkt.all.Packet250;
 import nl.hypothermic.ofts.pkt.all.Packet254;
+import nl.hypothermic.ofts.pkt.all.Packet255;
 import nl.hypothermic.ofts.pkt.all.Packet3;
 import nl.hypothermic.ofts.pkt.all.Packet30;
 import nl.hypothermic.ofts.pkt.all.Packet33;
@@ -71,7 +72,8 @@ public class PacketReader {
 				return new Packet250(dis);
 			case 254:
 				return new Packet254(dis);
-			// don't add 255: server to client only.
+			case 255:
+				return new Packet255(dis);
 			}
 			LoggingManager.warn("unknown paccket id " + i);
 		} catch (IOException x) {

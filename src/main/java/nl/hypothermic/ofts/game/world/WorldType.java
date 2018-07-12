@@ -22,7 +22,7 @@ public class WorldType {
         types[i] = this;
     }
 
-    public String name() {
+    public String getName() {
         return this.name;
     }
 
@@ -46,6 +46,10 @@ public class WorldType {
 
     public boolean c() {
         return this.h;
+    }
+    
+    public String toString() {
+    	return this.name;
     }
 
     public static WorldType getType(String s) {

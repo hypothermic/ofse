@@ -151,14 +151,14 @@ public class AcceptedConnection extends Thread {
 	private class WriterThread extends Thread {
 
 		private Packet temp;
-		private Packet0 keepAlive;
+		//private Packet0 keepAlive; // TODO
 
 		@Override public void run() {
 			while (!this.isInterrupted()) {
 				try {
 					if (outq.size() > 0) {
 						temp = outq.getFirst();
-						info("Writing packet " + temp.id);
+						info("Writing packet " + temp.id + " - " + temp.toString());
 						temp.write(dos);
 						dos.flush();
 						outq.removeFirst();
@@ -168,11 +168,11 @@ public class AcceptedConnection extends Thread {
 							dos.flush();
 							disconnect();
 						}
-					} else if (isEstablished) {
+					}/* else if (isEstablished) { // TODO
 						keepAlive = new Packet0();
 						keepAlive.write(dos);
 						dos.flush();
-					}
+					}*/
 				} catch (SocketException se) {
 					if (!se.getMessage().contains("Socket closed")) {
 						se.printStackTrace();

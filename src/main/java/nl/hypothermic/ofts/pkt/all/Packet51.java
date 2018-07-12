@@ -3,6 +3,7 @@ package nl.hypothermic.ofts.pkt.all;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -38,9 +39,6 @@ public class Packet51 extends Packet {
 	/** The length of the compressed chunk data byte array. */
 	private int compressedSize;
 
-	/** Unused field */
-	private int field_48110_h;
-
 	/** A temporary storage for the compressed chunk data byte array. */
 	private static byte[] temp = new byte[0];
 
@@ -49,7 +47,7 @@ public class Packet51 extends Packet {
 	}
 
 	public Packet51(DataInputStream dis) throws IOException {
-		this();
+		super(51);
 		this.read(dis);
 	}
 	
@@ -59,6 +57,7 @@ public class Packet51 extends Packet {
 
 	public Packet51(Chunk chunk, boolean par2, int par3, int xPos, int zPos) {
 		super(51);
+		System.out.println("debug 51 - chunkData len=" + 0 + " compressedSize=" + compressedSize);
 		this.x = xPos;
 		this.z = zPos;
 		this.includeInitialize = par2;
@@ -154,11 +153,13 @@ public class Packet51 extends Packet {
 		try {
 			var16.setInput(var8, 0, var9);
 			var16.finish();
+			System.out.println("var9" + var9);
 			this.chunkData = new byte[var9];
 			this.compressedSize = var16.deflate(this.chunkData);
 		} finally {
 			var16.end();
 		}
+		System.out.println("debug 51 chunkData len=" + chunkData.length + " compressedSize=" + compressedSize);
 	}
 
 	@Override public Packet react(AcceptedConnection ac) {
@@ -173,7 +174,7 @@ public class Packet51 extends Packet {
 		this.yMin = dis.readShort();
 		this.yMax = dis.readShort();
 		this.compressedSize = dis.readInt();
-		this.field_48110_h = dis.readInt();
+		/*this.field_48110_h = */dis.readInt();
 
 		if (temp.length < this.compressedSize) {
 			temp = new byte[this.compressedSize];
@@ -207,17 +208,22 @@ public class Packet51 extends Packet {
 	}
 
 	@Override public void write(DataOutputStream dos) throws IOException {
+		dos.write(id);
 		dos.writeInt(this.x);
 		dos.writeInt(this.z);
 		dos.writeBoolean(this.includeInitialize);
 		dos.writeShort((short) (this.yMin & 65535));
 		dos.writeShort((short) (this.yMax & 65535));
 		dos.writeInt(this.compressedSize);
-		dos.writeInt(this.field_48110_h);
+		dos.writeInt(/*this.field_48110_h*/ 0);
 		dos.write(this.chunkData, 0, this.compressedSize);
 	}
 
 	@Override public int getSize() {
 		return 17 + this.compressedSize;
+	}
+
+	@Override public String toString() {
+		return "Packet51 [x=" + this.x + ", z=" + this.z + ", yMin=" + this.yMin + ", yMax=" + this.yMax + ", chunkData=" + Arrays.toString(this.chunkData) + ", includeInitialize=" + this.includeInitialize + ", compressedSize=" + this.compressedSize + "]";
 	}
 }

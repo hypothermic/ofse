@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nl.hypothermic.ofts.game.Entity;
+import nl.hypothermic.ofts.game.Player;
 import nl.hypothermic.ofts.game.World;
 import nl.hypothermic.ofts.nbt.NBTTagCompound;
 
@@ -52,21 +53,12 @@ public class EntityTypes {
 		return entity;
 	}
 
-	public static Entity a(NBTTagCompound nbttagcompound, World world) {
+	public static Entity a(NBTTagCompound nbttagcompound) {
 		Entity entity = null;
-
-		try {
-			Class oclass = (Class) b.get(nbttagcompound.getString("id"));
-
-			if (oclass != null) {
-				entity = (Entity) oclass.getConstructor(new Class[] {
-						World.class
-				}).newInstance(new Object[] {
-						world
-				});
-			}
-		} catch (Exception exception) {
-			exception.printStackTrace();
+		System.out.println(nbttagcompound.getString("id"));
+		switch (nbttagcompound.getString("id")) {
+		case "d":
+			entity = new Player(null, null, false);
 		}
 
 		if (entity != null) {
@@ -78,7 +70,7 @@ public class EntityTypes {
 		return entity;
 	}
 
-	public static Entity a(int i, World world) {
+	/*public static Entity a(int i, World world) {
 		Entity entity = null;
 
 		try {
@@ -100,7 +92,7 @@ public class EntityTypes {
 		}
 
 		return entity;
-	}
+	}*/
 
 	public static int a(Entity entity) {
 		return ((Integer) e.get(entity.getClass())).intValue();

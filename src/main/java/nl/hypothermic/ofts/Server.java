@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.SplittableRandom;
 
+import nl.hypothermic.fireloader.FireLoader;
 import nl.hypothermic.ofts.game.Player;
 import nl.hypothermic.ofts.game.World;
-import nl.hypothermic.ofts.game.world.loader.ChunkRegionLoader;
 import nl.hypothermic.ofts.pkt.Packet;
 
 public class Server {
@@ -39,7 +39,7 @@ public class Server {
 		nl.start();
 		info("Networking initialized.");
 		try {
-			Server.world = new World(new ChunkRegionLoader(new File("world")));
+			Server.world = new World(new FireLoader(new File("world")));
 		} catch (IOException x) {
 			// TODO Auto-generated catch block
 			x.printStackTrace();

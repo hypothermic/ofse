@@ -19,8 +19,13 @@ public class Packet255 extends Packet {
 	}
 
 	public Packet255(String motd, int currentPlayers, int maxPlayers) {
-		super((byte) 255);
+		super(255);
 		this.reason = motd + "\u00A7" + currentPlayers + "\u00A7" + maxPlayers;
+	}
+
+	public Packet255(DataInputStream dis) throws IOException {
+		super(255);
+		this.read(dis);
 	}
 
 	@Override public Packet react(AcceptedConnection ac) {
@@ -39,5 +44,9 @@ public class Packet255 extends Packet {
 
 	@Override public int getSize() {
 		return this.reason.length();
+	}
+
+	@Override public String toString() {
+		return "Packet255 [reason=" + this.reason + "]";
 	}
 }

@@ -62,4 +62,8 @@ public class Packet13 extends Packet10 {
 	@Override public int getSize() {
 		return 41;
 	}
+
+	@Override public String toString() {
+		return "Packet13 [xPosition=" + this.xPosition + ", yPosition=" + this.yPosition + ", zPosition=" + this.zPosition + ", stance=" + this.stance + ", yaw=" + this.yaw + ", pitch=" + this.pitch + ", onGround=" + this.onGround + ", moving=" + this.moving + ", rotating=" + this.rotating + ", id=" + this.id + "]";
+	}
 }
