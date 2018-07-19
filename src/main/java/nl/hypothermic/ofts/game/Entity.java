@@ -2,6 +2,7 @@ package nl.hypothermic.ofts.game;
 
 import java.util.Random;
 
+import nl.hypothermic.ofts.game.entity.AxisAlignedBB;
 import nl.hypothermic.ofts.game.entity.EntityTypes;
 import nl.hypothermic.ofts.nbt.NBTTagCompound;
 import nl.hypothermic.ofts.nbt.NBTTagDouble;

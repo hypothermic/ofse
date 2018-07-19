@@ -1,4 +1,4 @@
-package nl.hypothermic.ofts.game;
+package nl.hypothermic.ofts.game.entity;
 
 import java.util.ArrayList;
 import java.util.List;

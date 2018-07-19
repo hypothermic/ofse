@@ -1,12 +1,13 @@
 package nl.hypothermic.ofts.game;
 
 import nl.hypothermic.ofts.Server;
+import nl.hypothermic.ofts.game.world.ChunkCompressionThread;
 import nl.hypothermic.ofts.massdata.MassPlayerData;
 import nl.hypothermic.ofts.nbt.NBTTagCompound;
 import nl.hypothermic.ofts.net.AcceptedConnection;
 import nl.hypothermic.ofts.pkt.Packet;
-import nl.hypothermic.ofts.pkt.all.Packet50;
-import nl.hypothermic.ofts.pkt.all.Packet51;
+import nl.hypothermic.ofts.pkt.all.Packet0;
+import nl.hypothermic.ofts.pkt.all.Packet60;
 import nl.hypothermic.ofts.util.LoggingManager;
 
 public class Player extends Entity {
@@ -63,8 +64,12 @@ public class Player extends Entity {
 	private final Thread chunkAllocationThread = new Thread() {
 		@Override public void run() {
 			LoggingManager.info("Test PlayerCAT");
-			conn.queuePacket(new Packet50(0, 0, true),
-							 new Packet51(Server.world.getChunk(0, 0), true, 0));
+			ChunkCompressionThread.sendPacket(conn, /*new Packet50(0, 0, true),
+							 						new Packet51(Server.world.getChunk(0, 0), true, 0),
+							 						new Packet50(1, 1, true),
+							 						new Packet51Async(Server.world.getChunk(0, 0), true, 0, 1, 1)*/
+													/*new Packet60(new Explosion(1, 0, 0, 20)),*/
+													new Packet0());
 		}
 	};
 

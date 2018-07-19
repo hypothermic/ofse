@@ -15,10 +15,11 @@ import nl.hypothermic.ofts.game.world.NibbleArray;
 import nl.hypothermic.ofts.net.AcceptedConnection;
 import nl.hypothermic.ofts.pkt.Packet;
 
-public class Packet51Alt extends Packet {
+public class Packet51Async extends Packet {
 	
 	// This packet was imported from the old CraftBukkit sources
 	// For testing only, this one doesn't work either.
+	// It should be routed through the compression thread!!
 
     public int a;
     public int b;
@@ -30,11 +31,11 @@ public class Packet51Alt extends Packet {
     private int h;
     public byte[] rawData = new byte[0]; // CraftBukkit
 
-    public Packet51Alt() {
+    public Packet51Async() {
     	super(51);
     }
 
-    public Packet51Alt(Chunk chunk, boolean flag, int i) {
+    public Packet51Async(Chunk chunk, boolean flag, int i) {
         super(51);
         this.a = chunk.xPosition;
         this.b = chunk.zPosition;
@@ -127,6 +128,8 @@ public class Packet51Alt extends Packet {
             i1 += abyte2.length;
         }
 
+        /* CraftBukkit start - Moved compression into its own method.
+        byte[] abyte = data; // CraftBukkit - uses data from above constructor
         Deflater deflater = new Deflater(-1);
 
         try {
@@ -136,9 +139,9 @@ public class Packet51Alt extends Packet {
             this.size = deflater.deflate(this.buffer);
         } finally {
             deflater.end();
-        }
-        
+        } */
         this.rawData = abyte;
+        // CraftBukkit end
     }
     
     @Override public Packet react(AcceptedConnection ac) {
@@ -187,6 +190,7 @@ public class Packet51Alt extends Packet {
     }
 
     public void write(DataOutputStream dataoutputstream) throws IOException { // CraftBukkit - throws IOException
+    	dataoutputstream.write(51);
         dataoutputstream.writeInt(this.a);
         dataoutputstream.writeInt(this.b);
         dataoutputstream.writeBoolean(this.f);
@@ -202,6 +206,6 @@ public class Packet51Alt extends Packet {
     }
 
 	public String toString() {
-		return "Packet51MapChunk [a=" + this.a + ", b=" + this.b + ", c=" + this.c + ", d=" + this.d + ", buffer=" + Arrays.toString(this.buffer) + ", f=" + this.f + ", size=" + this.size + ", h=" + this.h + ", rawData=" + Arrays.toString(this.rawData) + "]";
+		return "Packet51Async [a=" + this.a + ", b=" + this.b + ", c=" + this.c + ", d=" + this.d + ", buffer=" + Arrays.toString(this.buffer) + ", f=" + this.f + ", size=" + this.size + ", h=" + this.h + ", rawData=" + Arrays.toString(this.rawData) + "]";
 	}
 }

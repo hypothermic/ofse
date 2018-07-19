@@ -10,6 +10,7 @@ import java.util.SplittableRandom;
 import nl.hypothermic.fireloader.FireLoader;
 import nl.hypothermic.ofts.game.Player;
 import nl.hypothermic.ofts.game.World;
+import nl.hypothermic.ofts.game.world.ChunkCompressionThread;
 import nl.hypothermic.ofts.pkt.Packet;
 
 public class Server {
@@ -37,6 +38,7 @@ public class Server {
 	
 	private void init() {
 		nl.start();
+		ChunkCompressionThread.startThread();
 		info("Networking initialized.");
 		try {
 			Server.world = new World(new FireLoader(new File("world")));
