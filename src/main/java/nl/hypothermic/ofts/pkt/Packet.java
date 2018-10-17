@@ -58,7 +58,7 @@ public abstract class Packet {
 		if (string.length() > 32767) {
 			throw new IOException("String too large");
 		} else {
-			LoggingManager.info("SEND STR:" + string);
+			LoggingManager.info("SEND STR:" + string + " LEN: " + string.length());
 			dos.writeShort(string.length());
 			dos.writeChars(string);
 		}

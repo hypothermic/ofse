@@ -9,9 +9,9 @@ import java.util.zip.Deflater;
 // import java.util.zip.Deflater; // CraftBukkit
 import java.util.zip.Inflater;
 
-import nl.hypothermic.ofts.game.world.Chunk;
 import nl.hypothermic.ofts.game.world.ChunkSection;
 import nl.hypothermic.ofts.game.world.NibbleArray;
+import nl.hypothermic.ofts.game.world.loader.Chunk;
 import nl.hypothermic.ofts.net.AcceptedConnection;
 import nl.hypothermic.ofts.pkt.Packet;
 
@@ -198,6 +198,19 @@ public class Packet51Async extends Packet {
         dataoutputstream.writeShort((short) (this.d & '\uffff'));
         dataoutputstream.writeInt(this.size);
         dataoutputstream.writeInt(this.h);
+        try {
+			Thread.sleep(150);
+		} catch (InterruptedException x) {
+			// TODO Auto-generated catch block
+			x.printStackTrace();
+		}
+        System.out.println("WRITING BUFFER - Null:" + (buffer == null));
+        try {
+			Thread.sleep(150);
+		} catch (InterruptedException x) {
+			// TODO Auto-generated catch block
+			x.printStackTrace();
+		}
         dataoutputstream.write(this.buffer, 0, this.size);
     }
 

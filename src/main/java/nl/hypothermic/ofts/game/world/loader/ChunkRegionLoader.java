@@ -18,7 +18,6 @@ import nl.hypothermic.ofts.game.Entity;
 import nl.hypothermic.ofts.game.TileEntity;
 import nl.hypothermic.ofts.game.World;
 import nl.hypothermic.ofts.game.entity.EntityTypes;
-import nl.hypothermic.ofts.game.world.Chunk;
 import nl.hypothermic.ofts.game.world.ChunkCoordIntPair;
 import nl.hypothermic.ofts.game.world.ChunkSection;
 import nl.hypothermic.ofts.game.world.NibbleArray;

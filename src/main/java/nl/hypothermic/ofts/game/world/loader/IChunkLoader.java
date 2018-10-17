@@ -3,7 +3,6 @@ package nl.hypothermic.ofts.game.world.loader;
 import java.io.IOException;
 
 import nl.hypothermic.ofts.game.World;
-import nl.hypothermic.ofts.game.world.Chunk;
 import nl.hypothermic.ofts.game.world.WorldData;
 
 public interface IChunkLoader {

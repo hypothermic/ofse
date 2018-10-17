@@ -32,6 +32,7 @@ public class Packet1 extends Packet {
 		super(1);
 	}
 
+	/** Server-side usage only! */
 	public Packet1(int protocolVersion, String username, WorldType worldType, int gamemode, int dimension, byte difficulty, byte unused, byte maxPlayers) {
 		super(1);
 		this.username = username;
@@ -42,6 +43,13 @@ public class Packet1 extends Packet {
 		this.gamemode = gamemode;
 		this.g = unused;
 		this.maxPlayers = maxPlayers;
+	}
+	
+	/** Client-side usage only! */
+	public Packet1(int protocolVersion, String username) {
+		super(1);
+		this.username = username;
+		this.protocolVersion = protocolVersion;
 	}
 	
 	public Packet1(DataInputStream dis) throws IOException {
@@ -88,7 +96,7 @@ public class Packet1 extends Packet {
 		Player pl = new Player(ac, packet.username, true);
 		Server.players.add(pl);
 		LoggingManager.info("Player \"" + pl.username + "\" (pktname=\"" + packet.username + "\", entityId=" + pl.entityId + ") has joined the server.");
-		ac.queuePacket(new Packet1(pl.entityId, "", WorldType.NORMAL, Server.gamemode, Server.dimension, (byte) Server.difficulty, (byte) 0, (byte) Server.maxPlayers),
+		ac.queuePacket(new Packet1(29, "e", WorldType.NORMAL, Server.gamemode, Server.dimension, (byte) Server.difficulty, (byte) 0, (byte) Server.maxPlayers),
 					   new Packet6(1, 72, 1),
 					   new Packet202(true, false, true, true),
 					   new Packet4(Server.world.getTime()),
@@ -155,20 +163,46 @@ public class Packet1 extends Packet {
 	}
 
 	@Override public void write(DataOutputStream dos) throws IOException {
+		System.out.print("id:");
 		dos.write(id);
+		sleep();
+		System.out.print("pv:");
 		dos.writeInt(this.protocolVersion);
+		sleep();
+		System.out.print("un:");
 		writeString(this.username, dos);
+		sleep();
+		System.out.print("wt:");
 		if (this.worldType == null) {
 			writeString("", dos);
 		} else {
 			writeString(this.worldType.getName(), dos);
 		}
-
+		sleep();
+		System.out.print("gm:");
 		dos.writeInt(this.gamemode);
+		sleep();
+		System.out.print("dim:");
 		dos.writeInt(this.dim);
+		sleep();
+		System.out.print("diff:");
 		dos.writeByte(this.diff);
+		sleep();
+		System.out.print("g:");
 		dos.writeByte(this.g);
+		sleep();
+		System.out.print("max:");
 		dos.writeByte(this.maxPlayers);
+		sleep();
+		System.out.println();
+	}
+	
+	private void sleep() {
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException x) {
+			x.printStackTrace();
+		}
 	}
 
 	@Override public int getSize() {

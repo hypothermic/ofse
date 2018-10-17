@@ -59,4 +59,8 @@ public class Packet2 extends Packet {
 	@Override public int getSize() {
 		return 8 + this.data.length();
 	}
+
+	@Override public String toString() {
+		return "Packet2 [data=" + this.data + "]";
+	}
 }

@@ -56,7 +56,7 @@ public class Packet13 extends Packet10 {
         dos.writeDouble(zPosition);
         dos.writeFloat(yaw);
         dos.writeFloat(pitch);
-        super.write(dos);
+        super.writeWithoutDescriptor(dos);
 	}
 
 	@Override public int getSize() {

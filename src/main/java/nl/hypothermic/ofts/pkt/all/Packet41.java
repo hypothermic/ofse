@@ -20,7 +20,7 @@ public class Packet41 extends Packet {
     public short duration;
 	
 	public Packet41() {
-		super(10);
+		super(41);
 	}
 	
 	/** Note: use for subclasses ONLY. */
@@ -29,7 +29,7 @@ public class Packet41 extends Packet {
 	}
 	
 	public Packet41(DataInputStream dis) throws IOException {
-		super(10);
+		super(41);
 		this.read(dis);
 	}
 	

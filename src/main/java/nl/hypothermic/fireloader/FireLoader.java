@@ -10,20 +10,21 @@ import java.util.ArrayList;
 
 import nl.hypothermic.ofts.game.Entity;
 import nl.hypothermic.ofts.game.entity.EntityTypes;
-import nl.hypothermic.ofts.game.world.Chunk;
 import nl.hypothermic.ofts.game.world.ChunkSection;
 import nl.hypothermic.ofts.game.world.NibbleArray;
 import nl.hypothermic.ofts.game.world.WorldData;
+import nl.hypothermic.ofts.game.world.loader.Chunk;
 import nl.hypothermic.ofts.nbt.NBTCompressedStreamTools;
 import nl.hypothermic.ofts.nbt.NBTTagCompound;
 import nl.hypothermic.ofts.nbt.NBTTagList;
 
 /**==========================================**\
-     FireLoader - quickly load Anvil worlds.
-             v1.0.0 - 12/07/2018
+    FireLoader - quickly load Anvil worlds.
+            v1.0.0 - 12/07/2018
           
-     Copyright (c) admin@hypothermic.nl, 2018
-      with significant parts made by others.
+    Copyright (c) admin@hypothermic.nl, 2018
+     with significant parts made by others
+   which were released under the public domain
 \**==========================================**/
 
 public class FireLoader {

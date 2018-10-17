@@ -13,7 +13,7 @@ public class LoggingManager {
 	
 	private static void write(String dat) {
 		date = new Date();
-		System.out.println(sdf.format(date) + dat);
+		//System.out.println(sdf.format(date) + dat);
 	}
 	
 	public static void empty(String msg) {

@@ -8,9 +8,9 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-import nl.hypothermic.ofts.game.world.Chunk;
 import nl.hypothermic.ofts.game.world.ChunkSection;
 import nl.hypothermic.ofts.game.world.NibbleArray;
+import nl.hypothermic.ofts.game.world.loader.Chunk;
 import nl.hypothermic.ofts.net.AcceptedConnection;
 import nl.hypothermic.ofts.pkt.Packet;
 
@@ -37,10 +37,10 @@ public class Packet51 extends Packet {
 	public boolean includeInitialize;
 
 	/** The length of the compressed chunk data byte array. */
-	private int compressedSize;
+	public int compressedSize;
 
 	/** A temporary storage for the compressed chunk data byte array. */
-	private static byte[] temp = new byte[0];
+	public byte[] rawData = new byte[0];
 
 	public Packet51() {
 		super(51);
@@ -51,18 +51,18 @@ public class Packet51 extends Packet {
 		this.read(dis);
 	}
 	
-	public Packet51(Chunk chunk, boolean par2, int par3) {
-		this(chunk, par2, par3, chunk.xPosition, chunk.zPosition);
+	public Packet51(Chunk chunk, boolean includeInitialize, int par3) {
+		this(chunk, includeInitialize, par3, chunk.xPosition, chunk.zPosition);
 	}
 
-	public Packet51(Chunk chunk, boolean par2, int par3, int xPos, int zPos) {
+	public Packet51(Chunk chunk, boolean includeInitialize, int par3, int xPos, int zPos) {
 		super(51);
 		System.out.println("debug 51 - chunkData len=" + 0 + " compressedSize=" + compressedSize);
 		this.x = xPos;
 		this.z = zPos;
-		this.includeInitialize = par2;
+		this.includeInitialize = includeInitialize;
 
-		if (par2) {
+		if (includeInitialize) {
 			par3 = 65535;
 			chunk.seenByPlayer = true;
 		}
@@ -73,7 +73,7 @@ public class Packet51 extends Packet {
 		int var7;
 
 		for (var7 = 0; var7 < var4.length; ++var7) {
-			if (var4[var7] != null && (!par2 || !var4[var7].getIsEmpty()) && (par3 & 1 << var7) != 0) {
+			if (var4[var7] != null && (!includeInitialize || !var4[var7].getIsEmpty()) && (par3 & 1 << var7) != 0) {
 				this.yMin |= 1 << var7;
 				++var5;
 
@@ -86,20 +86,20 @@ public class Packet51 extends Packet {
 
 		var7 = 2048 * (5 * var5 + var6);
 
-		if (par2) {
+		if (includeInitialize) {
 			var7 += 256;
 		}
 
-		if (temp.length < var7) {
-			temp = new byte[var7];
+		if (rawData.length < var7) {
+			rawData = new byte[var7];
 		}
 
-		byte[] var8 = temp;
+		byte[] var8 = rawData;
 		int var9 = 0;
 		int var10;
 
 		for (var10 = 0; var10 < var4.length; ++var10) {
-			if (var4[var10] != null && (!par2 || !var4[var10].getIsEmpty()) && (par3 & 1 << var10) != 0) {
+			if (var4[var10] != null && (!includeInitialize || !var4[var10].getIsEmpty()) && (par3 & 1 << var10) != 0) {
 				byte[] var11 = var4[var10].getBlockLSBArray();
 				System.arraycopy(var11, 0, var8, var9, var11.length);
 				var9 += var11.length;
@@ -109,7 +109,7 @@ public class Packet51 extends Packet {
 		NibbleArray var15;
 
 		for (var10 = 0; var10 < var4.length; ++var10) {
-			if (var4[var10] != null && (!par2 || !var4[var10].getIsEmpty()) && (par3 & 1 << var10) != 0) {
+			if (var4[var10] != null && (!includeInitialize || !var4[var10].getIsEmpty()) && (par3 & 1 << var10) != 0) {
 				var15 = var4[var10].getBlockMetadataArray();
 				System.arraycopy(var15.data, 0, var8, var9, var15.data.length);
 				var9 += var15.data.length;
@@ -117,7 +117,7 @@ public class Packet51 extends Packet {
 		}
 
 		for (var10 = 0; var10 < var4.length; ++var10) {
-			if (var4[var10] != null && (!par2 || !var4[var10].getIsEmpty()) && (par3 & 1 << var10) != 0) {
+			if (var4[var10] != null && (!includeInitialize || !var4[var10].getIsEmpty()) && (par3 & 1 << var10) != 0) {
 				var15 = var4[var10].getBlocklightArray();
 				System.arraycopy(var15.data, 0, var8, var9, var15.data.length);
 				var9 += var15.data.length;
@@ -125,7 +125,7 @@ public class Packet51 extends Packet {
 		}
 
 		for (var10 = 0; var10 < var4.length; ++var10) {
-			if (var4[var10] != null && (!par2 || !var4[var10].getIsEmpty()) && (par3 & 1 << var10) != 0) {
+			if (var4[var10] != null && (!includeInitialize || !var4[var10].getIsEmpty()) && (par3 & 1 << var10) != 0) {
 				var15 = var4[var10].getSkylightArray();
 				System.arraycopy(var15.data, 0, var8, var9, var15.data.length);
 				var9 += var15.data.length;
@@ -134,7 +134,7 @@ public class Packet51 extends Packet {
 
 		if (var6 > 0) {
 			for (var10 = 0; var10 < var4.length; ++var10) {
-				if (var4[var10] != null && (!par2 || !var4[var10].getIsEmpty()) && var4[var10].getBlockMSBArray() != null && (par3 & 1 << var10) != 0) {
+				if (var4[var10] != null && (!includeInitialize || !var4[var10].getIsEmpty()) && var4[var10].getBlockMSBArray() != null && (par3 & 1 << var10) != 0) {
 					var15 = var4[var10].getBlockMSBArray();
 					System.arraycopy(var15.data, 0, var8, var9, var15.data.length);
 					var9 += var15.data.length;
@@ -142,7 +142,7 @@ public class Packet51 extends Packet {
 			}
 		}
 
-		if (par2) {
+		if (includeInitialize) {
 			byte[] var17 = chunk.getBiomeArray();
 			System.arraycopy(var17, 0, var8, var9, var17.length);
 			var9 += var17.length;
@@ -159,7 +159,6 @@ public class Packet51 extends Packet {
 		} finally {
 			var16.end();
 		}
-		System.out.println("debug 51 chunkData len=" + chunkData.length + " compressedSize=" + compressedSize);
 	}
 
 	@Override public Packet react(AcceptedConnection ac) {
@@ -176,11 +175,11 @@ public class Packet51 extends Packet {
 		this.compressedSize = dis.readInt();
 		/*this.field_48110_h = */dis.readInt();
 
-		if (temp.length < this.compressedSize) {
-			temp = new byte[this.compressedSize];
+		if (rawData.length < this.compressedSize) {
+			rawData = new byte[this.compressedSize];
 		}
 
-		dis.readFully(temp, 0, this.compressedSize);
+		dis.readFully(rawData, 0, this.compressedSize);
 		int var2 = 0;
 		int var3;
 
@@ -196,7 +195,7 @@ public class Packet51 extends Packet {
 
 		this.chunkData = new byte[var3];
 		Inflater var4 = new Inflater();
-		var4.setInput(temp, 0, this.compressedSize);
+		var4.setInput(rawData, 0, this.compressedSize);
 
 		try {
 			var4.inflate(this.chunkData);
@@ -208,7 +207,7 @@ public class Packet51 extends Packet {
 	}
 
 	@Override public void write(DataOutputStream dos) throws IOException {
-		dos.write(id);
+		dos.write(51);
 		dos.writeInt(this.x);
 		dos.writeInt(this.z);
 		dos.writeBoolean(this.includeInitialize);
@@ -216,6 +215,7 @@ public class Packet51 extends Packet {
 		dos.writeShort((short) (this.yMax & 65535));
 		dos.writeInt(this.compressedSize);
 		dos.writeInt(/*this.field_48110_h*/ 0);
+		System.out.println("bufsize=" + this.chunkData.length + ", csize=" + this.compressedSize);
 		dos.write(this.chunkData, 0, this.compressedSize);
 	}
 

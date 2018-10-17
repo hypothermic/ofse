@@ -58,6 +58,10 @@ public class Packet10 extends Packet {
 		onGround = dis.read() != 0;
 	}
 	
+	public void writeWithoutDescriptor(DataOutputStream dos) throws IOException {
+		dos.write(onGround ? 1 : 0);
+	}
+	
 	@Override public void write(DataOutputStream dos) throws IOException {
 		dos.write(id);
 		dos.write(onGround ? 1 : 0);

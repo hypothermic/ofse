@@ -1,4 +1,4 @@
-package nl.hypothermic.ofts.game.world;
+package nl.hypothermic.ofts.game.world.loader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nl.hypothermic.ofts.Server;
 import nl.hypothermic.ofts.game.Entity;
+import nl.hypothermic.ofts.game.world.ChunkCoordIntPair;
+import nl.hypothermic.ofts.game.world.ChunkSection;
 import nl.hypothermic.ofts.util.MathHelper;
 
 public class Chunk {

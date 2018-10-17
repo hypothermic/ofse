@@ -1,6 +1,7 @@
 package nl.hypothermic.ofts.pkt;
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 
 import nl.hypothermic.ofts.pkt.all.Packet0;
@@ -17,6 +18,7 @@ import nl.hypothermic.ofts.pkt.all.Packet3;
 import nl.hypothermic.ofts.pkt.all.Packet30;
 import nl.hypothermic.ofts.pkt.all.Packet33;
 import nl.hypothermic.ofts.pkt.all.Packet4;
+import nl.hypothermic.ofts.pkt.all.Packet41;
 import nl.hypothermic.ofts.pkt.all.Packet50;
 import nl.hypothermic.ofts.pkt.all.Packet51;
 import nl.hypothermic.ofts.pkt.all.Packet6;
@@ -60,6 +62,8 @@ public class PacketReader {
 				return new Packet30(dis);
 			case 33:
 				return new Packet33(dis);
+			case 41:
+				return new Packet41(dis);
 			case 50:
 				return new Packet50(dis);
 			case 51:
@@ -76,8 +80,10 @@ public class PacketReader {
 				return new Packet255(dis);
 			}
 			LoggingManager.warn("unknown paccket id " + i);
+		} catch (EOFException eofexception) {
+	        LoggingManager.err("Reached end of stream");
 		} catch (IOException x) {
-			x.printStackTrace();
+			//x.printStackTrace();
 		}
 		return null;
 	}

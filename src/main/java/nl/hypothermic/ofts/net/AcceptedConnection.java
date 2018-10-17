@@ -2,7 +2,6 @@ package nl.hypothermic.ofts.net;
 
 import static nl.hypothermic.ofts.util.LoggingManager.*;
 
-import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -10,15 +9,14 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.LinkedList;
 
+import nl.hypothermic._cemuV2d.SniffedBufferedOutputStream;
 import nl.hypothermic.ofts.NetListenThread;
-import nl.hypothermic.ofts.Server;
-import nl.hypothermic.ofts.game.Player;
 import nl.hypothermic.ofts.pkt.Packet;
 import nl.hypothermic.ofts.pkt.PacketReader;
 import nl.hypothermic.ofts.pkt.all.Packet0;
-import nl.hypothermic.ofts.pkt.all.Packet1;
-import nl.hypothermic.ofts.pkt.all.Packet2;
+import nl.hypothermic.ofts.pkt.all.Packet202;
 import nl.hypothermic.ofts.pkt.all.Packet255;
+import nl.hypothermic.ofts.pkt.all.Packet53;
 
 public class AcceptedConnection extends Thread {
 
@@ -41,7 +39,7 @@ public class AcceptedConnection extends Thread {
 	@Override public void run() {
 		try {
 			dis = new DataInputStream(socket.getInputStream());
-			dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream(), 5120));
+			dos = new DataOutputStream(new SniffedBufferedOutputStream(socket.getOutputStream(), 5120));
 			reader.start();
 			writer.start();
 		} catch (Exception x) {
@@ -138,6 +136,9 @@ public class AcceptedConnection extends Thread {
 							outq.add(react);
 						}
 					}
+				} else {
+					err("End of stream");
+					disconnect();
 				}
 				try {
 					Thread.sleep(20);
@@ -151,7 +152,7 @@ public class AcceptedConnection extends Thread {
 	private class WriterThread extends Thread {
 
 		private Packet temp;
-		//private Packet0 keepAlive; // TODO
+		private Packet0 keepAlive;
 
 		@Override public void run() {
 			while (!this.isInterrupted()) {
@@ -159,6 +160,13 @@ public class AcceptedConnection extends Thread {
 					if (outq.size() > 0) {
 						temp = outq.getFirst();
 						info("Writing packet " + temp.id + " - " + temp.toString());
+						try {
+							Thread.sleep(200);
+						} catch (InterruptedException x) {
+							// TODO Auto-generated catch block
+							x.printStackTrace();
+						}
+						System.out.println("\nNEW PKT [" + temp.id + "]:");
 						temp.write(dos);
 						dos.flush();
 						outq.removeFirst();
@@ -168,11 +176,14 @@ public class AcceptedConnection extends Thread {
 							dos.flush();
 							disconnect();
 						}
-					}/* else if (isEstablished) { // TODO
+					} else if (isEstablished) { // TODO
+						/*System.out.println("\nNEW PKT [0]:");
 						keepAlive = new Packet0();
 						keepAlive.write(dos);
-						dos.flush();
-					}*/
+						dos.flush();*/
+						queuePacket(new Packet202(true, true, true, true));
+					}
+					dos.flush(); // debug
 				} catch (SocketException se) {
 					if (!se.getMessage().contains("Socket closed")) {
 						se.printStackTrace();

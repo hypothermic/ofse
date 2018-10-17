@@ -3,8 +3,9 @@ package nl.hypothermic.ofts.game;
 import java.io.IOException;
 
 import nl.hypothermic.fireloader.FireLoader;
-import nl.hypothermic.ofts.game.world.Chunk;
 import nl.hypothermic.ofts.game.world.WorldData;
+import nl.hypothermic.ofts.game.world.generator.WorldGenerator;
+import nl.hypothermic.ofts.game.world.loader.Chunk;
 
 public class World {
 
@@ -12,13 +13,20 @@ public class World {
     
     private FireLoader loader;
     
+    private WorldGenerator worldGen;
+    
     public Chunk getChunk(int x, int z) {
-    	return loader.getChunkAt(x, z);
+    	Chunk chunk = loader.getChunkAt(x, z);
+    	if (chunk != null) {
+    		chunk = worldGen.generate(x, z);
+    	}
+    	return chunk;
     }
     
-    public World(FireLoader loader) throws IOException {
+    public World(FireLoader loader, WorldGenerator worldGen) throws IOException {
     	this.loader = loader;
     	this.worldData = loader.getWorldData();
+    	this.worldGen = worldGen;
     }
     
     public WorldData getWorldData() {
