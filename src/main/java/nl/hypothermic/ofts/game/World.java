@@ -17,7 +17,7 @@ public class World {
     
     public Chunk getChunk(int x, int z) {
     	Chunk chunk = loader.getChunkAt(x, z);
-    	if (chunk != null) {
+    	if (chunk == null) {
     		chunk = worldGen.generate(x, z);
     	}
     	return chunk;
