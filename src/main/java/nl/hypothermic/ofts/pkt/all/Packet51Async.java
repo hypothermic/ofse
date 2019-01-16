@@ -198,19 +198,6 @@ public class Packet51Async extends Packet {
         dataoutputstream.writeShort((short) (this.d & '\uffff'));
         dataoutputstream.writeInt(this.size);
         dataoutputstream.writeInt(this.h);
-        try {
-			Thread.sleep(150);
-		} catch (InterruptedException x) {
-			// TODO Auto-generated catch block
-			x.printStackTrace();
-		}
-        System.out.println("WRITING BUFFER - Null:" + (buffer == null));
-        try {
-			Thread.sleep(150);
-		} catch (InterruptedException x) {
-			// TODO Auto-generated catch block
-			x.printStackTrace();
-		}
         dataoutputstream.write(this.buffer, 0, this.size);
     }
 

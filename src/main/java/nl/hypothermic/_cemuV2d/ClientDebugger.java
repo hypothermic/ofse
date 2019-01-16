@@ -18,12 +18,12 @@ public class ClientDebugger {
 		DataInputStream dis = new DataInputStream(socket.getInputStream());
 		DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 		
-		//os.write(254);
-		//if (dis.read() != 255) {
-		//	socket.close();
-		//	throw new RuntimeException("Server did not respond with motd message");
-		//}
-		//System.out.println("Server is responding with MOTD: " + Packet.readString(dis, 64));
+		dos.write(254);
+		if (dis.read() != 255) {
+			socket.close();
+			throw new RuntimeException("Server did not respond with motd message");
+		}
+		System.out.println("Server is responding with MOTD: " + Packet.readString(dis, 64));
 		
 		new Packet2("_cemuV2d;localhost:25565").write(dos);
 		

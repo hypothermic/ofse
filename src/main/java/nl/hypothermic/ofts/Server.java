@@ -25,7 +25,7 @@ public class Server {
 	public static String motd = "Powered by OpenFire";
 	public static int currentPlayers = 2;
 	public static int maxPlayers = 4;
-	public static int gamemode = 0; // Default gamemode
+	public static int gamemode = 1; // Default gamemode 0=survival 1=creative
 	public static int dimension = 0; // -1=nether, 0=normal, 1=end
 	public static int difficulty = 0; // 0=peaceful, 1=easy, 2=normal, 3=hard
 	public static ArrayList<Player> players = new ArrayList<Player>();

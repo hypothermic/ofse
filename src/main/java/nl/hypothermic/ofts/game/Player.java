@@ -67,14 +67,16 @@ public class Player extends Entity {
 	private final Thread chunkAllocationThread = new Thread() {
 		@Override public void run() {
 			LoggingManager.info("Test PlayerCAT");
-			ChunkCompressionThread.sendPacket(conn,
-													new Packet50(1, 1, true),
-							 						new Packet51(Server.world.getChunk(1, 1), true, 0)
-							 						/*new Packet50(-1, -1, true),
-		  				 							new Packet51Async(Server.world.getChunk(1, 1), true, 0)*/
-													);
-			conn.queuePacket(new Packet202(true, true, true, true),
-							 new Packet53(288, 40, -391, 1));
+			int lastZ = Math.round(((int) locZ) / 16);
+			int lastX = Math.round(((int) locX) / 16);
+			for (int x = (lastX - 2); x < (lastX + 2); x++) {
+				for (int z = (lastZ - 2); z < (lastZ + 2); z++) {
+					ChunkCompressionThread.sendPacket(conn,
+												      new Packet50(x, z, true),
+												      new Packet51(Server.world.getChunk(x, z), true, 0));
+				}
+			}
+			conn.queuePacket(new Packet202(true, true, true, true));
 		}
 	};
 
